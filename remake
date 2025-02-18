@@ -67,7 +67,14 @@ model_txt="${common_files}/etc/model_database.txt"
 
 # System operation environment
 arch_info="$(uname -m)"
-host_release="$(cat /etc/os-release | grep '^VERSION_CODENAME=.*' | cut -d'=' -f2)"
+if [ -f "/etc/os-release" ]; then
+    if grep -q "^PRETTY_NAME=\"Arch Linux\"" /etc/os-release; then
+        host_release="Arch Linux"
+    else
+        host_release="$(cat /etc/os-release | grep '^VERSION_CODENAME=.*' | cut -d'=' -f2)"
+    fi
+fi
+
 # Add custom OpenWrt firmware information
 op_release="etc/flippy-openwrt-release"
 ophub_release_file="etc/ophub-release"
@@ -1198,7 +1205,7 @@ loop_make() {
 
 # Show welcome message
 echo -e "${STEPS} Welcome to make OpenWrt!"
-echo -e "${INFO} Server running on Ubuntu: [ Release: ${host_release} / Host: ${arch_info} ] \n"
+echo -e "${INFO} Server running on: [ Release: ${host_release} / Host: ${arch_info} ] \n"
 # Check script permission
 [[ "$(id -u)" == 0 ]] || error_msg "please run this script as root: [ sudo ./${0} ]"
 
