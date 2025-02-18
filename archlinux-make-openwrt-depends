@@ -1,0 +1,4 @@
+sudo pacman -Syu
+sudo pacman -S base-devel git wget curl btrfs-progs parted dosfstools util-linux pigz \
+               cmake ninja python python-pip qemu-tools rsync scons squashfs-tools \
+               unzip zip zlib zstd vim xmlto
